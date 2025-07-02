@@ -1,5 +1,6 @@
 <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="20px" height="20px"
-    viewBox="0 0 200.000000 200.000000" preserveAspectRatio="xMidYMid meet">
+    viewBox="0 0 200.000000 200.000000" preserveAspectRatio="xMidYMid meet"
+     fill="#99a1a">
 
     <g transform="translate(0.000000,200.000000) scale(0.100000,-0.100000)" fill="#99a1a" stroke="none">
         <path d="M865 1984 c-427 -66 -752 -369 -842 -785 -27 -128 -23 -314 10 -444
