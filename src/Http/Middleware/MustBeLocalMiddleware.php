@@ -2,7 +2,6 @@
 
 namespace Backstage\Tools\Http\Middleware;
 
-use Backstage\Tools\ToolsPlugin;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,8 +15,8 @@ class MustBeLocalMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!app()->isLocal()) {
-          abort(404, 'This tool is only available in local environment.');
+        if (! app()->isLocal()) {
+            abort(404, 'This tool is only available in local environment.');
         }
 
         return $next($request);

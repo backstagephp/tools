@@ -16,11 +16,11 @@ class AuthorizeToolsMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!$request->user()) {
+        if (! $request->user()) {
             return abort(403, 'Unauthorized');
         }
 
-        if (!ToolsPlugin::get()->isAccessible()) {
+        if (! ToolsPlugin::get()->isAccessible()) {
             return abort(403, 'Unauthorized');
         }
 
