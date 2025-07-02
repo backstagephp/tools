@@ -2,25 +2,30 @@
 
 namespace Backstage\Tools;
 
-use Backstage\Tools\Commands\ToolsCommand;
-use Backstage\Tools\Testing\TestsTools;
-use Filament\Support\Assets\AlpineComponent;
-use Filament\Support\Assets\Asset;
-use Filament\Support\Assets\Css;
 use Filament\Support\Assets\Js;
-use Filament\Support\Facades\FilamentAsset;
-use Filament\Support\Facades\FilamentIcon;
+use Filament\Support\Assets\Css;
+use Filament\Support\Assets\Asset;
 use Illuminate\Filesystem\Filesystem;
-use Livewire\Features\SupportTesting\Testable;
-use Spatie\LaravelPackageTools\Commands\InstallCommand;
+use Illuminate\Support\Facades\Blade;
+use Backstage\Tools\Testing\TestsTools;
 use Spatie\LaravelPackageTools\Package;
+use Backstage\Tools\Commands\ToolsCommand;
+use Filament\Support\Facades\FilamentIcon;
+use Filament\Support\Facades\FilamentAsset;
+use Filament\Support\Assets\AlpineComponent;
+use Livewire\Features\SupportTesting\Testable;
+use Backstage\Tools\Providers\PulseServiceProvider;
+use Backstage\Tools\Providers\HorizonServiceProvider;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Backstage\Tools\Providers\TelescopeServiceProvider;
+use Livewire\Livewire;
+use Spatie\LaravelPackageTools\Commands\InstallCommand;
 
 class ToolsServiceProvider extends PackageServiceProvider
 {
-    public static string $name = 'tools';
+    public static string $name = 'backstage-tools';
 
-    public static string $viewNamespace = 'tools';
+    public static string $viewNamespace = 'backstage/tools';
 
     public function configurePackage(Package $package): void
     {
@@ -58,8 +63,6 @@ class ToolsServiceProvider extends PackageServiceProvider
         }
     }
 
-    public function packageRegistered(): void {}
-
     public function packageBooted(): void
     {
         // Asset Registration
@@ -87,6 +90,8 @@ class ToolsServiceProvider extends PackageServiceProvider
 
         // Testing
         Testable::mixin(new TestsTools);
+
+        Livewire::component('backstage/tools::tools', \Backstage\Tools\Livewire\Components\Tools::class);
     }
 
     protected function getAssetPackageName(): ?string
@@ -101,8 +106,8 @@ class ToolsServiceProvider extends PackageServiceProvider
     {
         return [
             // AlpineComponent::make('tools', __DIR__ . '/../resources/dist/components/tools.js'),
-            Css::make('tools-styles', __DIR__ . '/../resources/dist/tools.css'),
-            Js::make('tools-scripts', __DIR__ . '/../resources/dist/tools.js'),
+            // Css::make('tools-styles', __DIR__ . '/../resources/dist/tools.css'),
+            // Js::make('tools-scripts', __DIR__ . '/../resources/dist/tools.js'),
         ];
     }
 
@@ -145,8 +150,6 @@ class ToolsServiceProvider extends PackageServiceProvider
      */
     protected function getMigrations(): array
     {
-        return [
-            'create_tools_table',
-        ];
+        return [];
     }
 }

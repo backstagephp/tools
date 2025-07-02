@@ -2,13 +2,20 @@
 
 namespace Backstage\Tools;
 
-use Filament\Contracts\Plugin;
+use Closure;
 use Filament\Panel;
+use Filament\Contracts\Plugin;
+use Filament\View\PanelsRenderHook;
+use Illuminate\Support\Facades\Blade;
 use Filament\Support\Concerns\EvaluatesClosures;
+use Backstage\Tools\Http\Middleware\MustBeLocalMiddleware;
+use Backstage\Tools\Http\Middleware\AuthorizeToolsMiddleware;
 
 class ToolsPlugin implements Plugin
 {
     use EvaluatesClosures;
+
+    protected Closure|bool $canAccessTools = true;
 
     public function getId(): string
     {
@@ -17,13 +24,51 @@ class ToolsPlugin implements Plugin
 
     public function register(Panel $panel): void
     {
-        //
+        app()->register(\Backstage\Tools\Providers\HorizonServiceProvider::class);
+        app()->register(\Backstage\Tools\Providers\PulseServiceProvider::class);
+        app()->register(\Backstage\Tools\Providers\TelescopeServiceProvider::class);
+
+        config([
+            'horizon.path' => $panel->getPath() . '/horizon',
+        ]);
+
+        config([
+            'horizon.middleware' => [
+                'web',
+                AuthorizeToolsMiddleware::class
+            ],
+        ]);
+
+        config([
+            'pulse.path' => $panel->getPath() . '/pulse',
+        ]);
+
+        config([
+            'pulse.middleware' => [
+                'web',
+                AuthorizeToolsMiddleware::class,
+            ],
+        ]);
+
+        config([
+            'telescope.path' => $panel->getPath() . '/telescope',
+        ]);
+
+        config([
+            'telescope.middleware' => [
+                'web',
+                MustBeLocalMiddleware::class,
+                AuthorizeToolsMiddleware::class,
+            ],
+        ]);
+
+        $panel->renderHook(
+            PanelsRenderHook::GLOBAL_SEARCH_AFTER,
+            fn(): string => Blade::render('@livewire(\'backstage/tools::tools\')'),
+        );
     }
 
-    public function boot(Panel $panel): void
-    {
-        //
-    }
+    public function boot(Panel $panel): void {}
 
     public static function make(): static
     {
@@ -36,5 +81,17 @@ class ToolsPlugin implements Plugin
         $plugin = filament(app(static::class)->getId());
 
         return $plugin;
+    }
+
+    public function canAccessTools(bool|Closure $canAccessTools): static
+    {
+        $this->canAccessTools = $canAccessTools;
+
+        return $this;
+    }
+
+    public function isAccessible(): bool
+    {
+        return $this->evaluate($this->canAccessTools);
     }
 }
