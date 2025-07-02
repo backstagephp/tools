@@ -2,6 +2,8 @@
 
 namespace Backstage\Tools;
 
+use Backstage\Tools\Commands\ToolsCommand;
+use Backstage\Tools\Testing\TestsTools;
 use Filament\Support\Assets\AlpineComponent;
 use Filament\Support\Assets\Asset;
 use Filament\Support\Assets\Css;
@@ -13,8 +15,6 @@ use Livewire\Features\SupportTesting\Testable;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Backstage\Tools\Commands\ToolsCommand;
-use Backstage\Tools\Testing\TestsTools;
 
 class ToolsServiceProvider extends PackageServiceProvider
 {

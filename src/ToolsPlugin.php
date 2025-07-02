@@ -2,8 +2,8 @@
 
 namespace Backstage\Tools;
 
-use Filament\Panel;
 use Filament\Contracts\Plugin;
+use Filament\Panel;
 use Filament\Support\Concerns\EvaluatesClosures;
 
 class ToolsPlugin implements Plugin
