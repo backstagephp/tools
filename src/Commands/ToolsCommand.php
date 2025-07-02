@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Backstage\Tools\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class ToolsCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'tools';
 
     public $description = 'My command';
 

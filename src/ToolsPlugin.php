@@ -1,15 +1,18 @@
 <?php
 
-namespace VendorName\Skeleton;
+namespace Backstage\Tools;
 
-use Filament\Contracts\Plugin;
 use Filament\Panel;
+use Filament\Contracts\Plugin;
+use Filament\Support\Concerns\EvaluatesClosures;
 
-class SkeletonPlugin implements Plugin
+class ToolsPlugin implements Plugin
 {
+    use EvaluatesClosures;
+
     public function getId(): string
     {
-        return 'skeleton';
+        return 'tools';
     }
 
     public function register(Panel $panel): void
