@@ -38,6 +38,22 @@ class ToolsServiceProvider extends PackageServiceProvider
                     ->publishMigrations()
                     ->askToRunMigrations()
                     ->askToStarRepoOnGitHub('backstage/tools');
+
+                $command->startWith(function () use ($command) {
+                    $publishables = [
+                        'horizon-config',
+                        'pulse-migrations',
+                        'pulse-config',
+                        'telescope-migrations',
+                    ];
+
+                    foreach ($publishables as $publishable) {
+                        $command->call('vendor:publish', [
+                            '--tag' => $publishable,
+                            '--force' => true,
+                        ]);
+                    }
+                });
             });
 
         $configFileName = $package->shortName();
