@@ -24,7 +24,7 @@ class Tools extends Component
             [
                 'icon' => 'backstage/tools::svg.telescope',
                 'route' => 'telescope',
-                'visible' => ToolsPlugin::get()->isAccessible() && App::isLocal()
+                'visible' => ToolsPlugin::get()->isAccessible() && App::isLocal(),
             ],
         ];
 
