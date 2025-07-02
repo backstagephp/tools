@@ -2,24 +2,20 @@
 
 namespace Backstage\Tools;
 
-use Filament\Support\Assets\Js;
-use Filament\Support\Assets\Css;
-use Filament\Support\Assets\Asset;
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Facades\Blade;
-use Backstage\Tools\Testing\TestsTools;
-use Spatie\LaravelPackageTools\Package;
 use Backstage\Tools\Commands\ToolsCommand;
-use Filament\Support\Facades\FilamentIcon;
-use Filament\Support\Facades\FilamentAsset;
+use Backstage\Tools\Testing\TestsTools;
 use Filament\Support\Assets\AlpineComponent;
+use Filament\Support\Assets\Asset;
+use Filament\Support\Assets\Css;
+use Filament\Support\Assets\Js;
+use Filament\Support\Facades\FilamentAsset;
+use Filament\Support\Facades\FilamentIcon;
+use Illuminate\Filesystem\Filesystem;
 use Livewire\Features\SupportTesting\Testable;
-use Backstage\Tools\Providers\PulseServiceProvider;
-use Backstage\Tools\Providers\HorizonServiceProvider;
-use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Backstage\Tools\Providers\TelescopeServiceProvider;
 use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
+use Spatie\LaravelPackageTools\Package;
+use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class ToolsServiceProvider extends PackageServiceProvider
 {

@@ -3,14 +3,12 @@
 namespace Backstage\Tools\Providers;
 
 use Backstage\Tools\ToolsPlugin;
-use Filament\Facades\Filament;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Horizon\Horizon;
 use Laravel\Horizon\HorizonApplicationServiceProvider;
 
 class HorizonServiceProvider extends HorizonApplicationServiceProvider
 {
-    
     /**
      * Bootstrap any application services.
      */

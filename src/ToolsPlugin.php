@@ -2,20 +2,20 @@
 
 namespace Backstage\Tools;
 
+use Backstage\Tools\Http\Middleware\AuthorizeToolsMiddleware;
+use Backstage\Tools\Http\Middleware\MustBeLocalMiddleware;
 use Closure;
-use Filament\Panel;
 use Filament\Contracts\Plugin;
+use Filament\Panel;
+use Filament\Support\Concerns\EvaluatesClosures;
 use Filament\View\PanelsRenderHook;
 use Illuminate\Support\Facades\Blade;
-use Filament\Support\Concerns\EvaluatesClosures;
-use Backstage\Tools\Http\Middleware\MustBeLocalMiddleware;
-use Backstage\Tools\Http\Middleware\AuthorizeToolsMiddleware;
 
 class ToolsPlugin implements Plugin
 {
     use EvaluatesClosures;
 
-    protected Closure|bool $canAccessTools = true;
+    protected Closure | bool $canAccessTools = true;
 
     public function getId(): string
     {
@@ -35,7 +35,7 @@ class ToolsPlugin implements Plugin
         config([
             'horizon.middleware' => [
                 'web',
-                AuthorizeToolsMiddleware::class
+                AuthorizeToolsMiddleware::class,
             ],
         ]);
 
@@ -64,7 +64,7 @@ class ToolsPlugin implements Plugin
 
         $panel->renderHook(
             PanelsRenderHook::GLOBAL_SEARCH_AFTER,
-            fn(): string => Blade::render('@livewire(\'backstage/tools::tools\')'),
+            fn (): string => Blade::render('@livewire(\'backstage/tools::tools\')'),
         );
     }
 
@@ -83,7 +83,7 @@ class ToolsPlugin implements Plugin
         return $plugin;
     }
 
-    public function canAccessTools(bool|Closure $canAccessTools): static
+    public function canAccessTools(bool | Closure $canAccessTools): static
     {
         $this->canAccessTools = $canAccessTools;
 
