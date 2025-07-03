@@ -28,7 +28,7 @@ class ToolsPlugin implements Plugin
         app()->register(\Backstage\Tools\Providers\PulseServiceProvider::class);
         app()->register(\Backstage\Tools\Providers\TelescopeServiceProvider::class);
 
-        if (!empty($panel->getPath())) {
+        if (! empty($panel->getPath())) {
             config([
                 'horizon.path' => $panel->getPath() . '/horizon',
             ]);
@@ -70,7 +70,7 @@ class ToolsPlugin implements Plugin
 
         $panel->renderHook(
             PanelsRenderHook::GLOBAL_SEARCH_AFTER,
-            fn(): string => Blade::render('@livewire(\'backstage/tools::tools\')'),
+            fn (): string => Blade::render('@livewire(\'backstage/tools::tools\')'),
         );
     }
 
