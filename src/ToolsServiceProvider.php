@@ -4,15 +4,15 @@ namespace Backstage\Tools;
 
 use Backstage\Tools\Commands\ToolsCommand;
 use Backstage\Tools\Testing\TestsTools;
+use BladeUI\Icons\Factory;
 use Filament\Support\Assets\AlpineComponent;
 use Filament\Support\Assets\Asset;
 use Filament\Support\Assets\Css;
 use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
-use Filament\Support\Facades\FilamentIcon;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Filesystem\Filesystem;
 use Livewire\Features\SupportTesting\Testable;
-use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -88,8 +88,11 @@ class ToolsServiceProvider extends PackageServiceProvider
             $this->getAssetPackageName()
         );
 
-        // Icon Registration
-        FilamentIcon::register($this->getIcons());
+        $this->callAfterResolving(Factory::class, function (Factory $factory, Container $container) {
+            $factory->add('tools', array_merge(['path' => __DIR__ . '/../resources/svg'], [
+                'prefix' => 'tools',
+            ]));
+        });
 
         // Handle Stubs
         if (app()->runningInConsole()) {
@@ -102,8 +105,6 @@ class ToolsServiceProvider extends PackageServiceProvider
 
         // Testing
         Testable::mixin(new TestsTools);
-
-        Livewire::component('backstage/tools::tools', \Backstage\Tools\Livewire\Components\Tools::class);
     }
 
     protected function getAssetPackageName(): ?string

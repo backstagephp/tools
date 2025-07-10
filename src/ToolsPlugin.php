@@ -2,14 +2,15 @@
 
 namespace Backstage\Tools;
 
-use Backstage\Tools\Http\Middleware\AuthorizeToolsMiddleware;
-use Backstage\Tools\Http\Middleware\MustBeLocalMiddleware;
 use Closure;
-use Filament\Contracts\Plugin;
 use Filament\Panel;
+use Filament\Contracts\Plugin;
+use Illuminate\Support\Facades\Route;
+use Backstage\Tools\Panel\Actions\ToolsAction;
 use Filament\Support\Concerns\EvaluatesClosures;
-use Filament\View\PanelsRenderHook;
-use Illuminate\Support\Facades\Blade;
+use Backstage\Tools\Http\Middleware\MustBeLocalMiddleware;
+use Backstage\Tools\Http\Middleware\AuthorizeToolsMiddleware;
+use Opcodes\LogViewer\Http\Controllers\IndexController;
 
 class ToolsPlugin implements Plugin
 {
@@ -27,6 +28,7 @@ class ToolsPlugin implements Plugin
         app()->register(\Backstage\Tools\Providers\HorizonServiceProvider::class);
         app()->register(\Backstage\Tools\Providers\PulseServiceProvider::class);
         app()->register(\Backstage\Tools\Providers\TelescopeServiceProvider::class);
+        // app()->register(\Backstage\Tools\Providers\LogViewerServiceProvider::class);
 
         if (! empty($panel->getPath())) {
             config([
@@ -68,10 +70,16 @@ class ToolsPlugin implements Plugin
             ],
         ]);
 
-        $panel->renderHook(
-            PanelsRenderHook::GLOBAL_SEARCH_AFTER,
-            fn (): string => Blade::render('@livewire(\'backstage/tools::tools\')'),
-        );
+        config([
+            'log-viewer' => [
+                'path' => $panel->getPath() . '/logs',
+            ]
+        ]);
+        
+        $panel->userMenuItems([
+            ToolsAction::make(),
+
+        ]);
     }
 
     public function boot(Panel $panel): void {}
