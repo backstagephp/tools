@@ -2,15 +2,13 @@
 
 namespace Backstage\Tools;
 
-use Closure;
-use Filament\Panel;
-use Filament\Contracts\Plugin;
-use Illuminate\Support\Facades\Route;
-use Backstage\Tools\Panel\Actions\ToolsAction;
-use Filament\Support\Concerns\EvaluatesClosures;
-use Backstage\Tools\Http\Middleware\MustBeLocalMiddleware;
 use Backstage\Tools\Http\Middleware\AuthorizeToolsMiddleware;
-use Opcodes\LogViewer\Http\Controllers\IndexController;
+use Backstage\Tools\Http\Middleware\MustBeLocalMiddleware;
+use Backstage\Tools\Panel\Actions\ToolsAction;
+use Closure;
+use Filament\Contracts\Plugin;
+use Filament\Panel;
+use Filament\Support\Concerns\EvaluatesClosures;
 
 class ToolsPlugin implements Plugin
 {
@@ -73,9 +71,9 @@ class ToolsPlugin implements Plugin
         config([
             'log-viewer' => [
                 'path' => $panel->getPath() . '/logs',
-            ]
+            ],
         ]);
-        
+
         $panel->userMenuItems([
             ToolsAction::make(),
 
