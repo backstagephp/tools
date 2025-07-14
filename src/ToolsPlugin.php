@@ -68,12 +68,6 @@ class ToolsPlugin implements Plugin
             ],
         ]);
 
-        config([
-            'log-viewer' => [
-                'path' => $panel->getPath() . '/logs',
-            ],
-        ]);
-
         $panel->userMenuItems([
             ToolsAction::make(),
         ]);
