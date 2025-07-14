@@ -30,7 +30,7 @@ class ToolsPlugin implements Plugin
 
         if (! empty($panel->getPath())) {
             config([
-                'horizon.path' => $panel->getPath() . '/horizon',
+                'horizon.path' => 'horizon',
             ]);
         } else {
             config([
@@ -46,7 +46,7 @@ class ToolsPlugin implements Plugin
         ]);
 
         config([
-            'pulse.path' => $panel->getPath() . '/pulse',
+            'pulse.path' => 'pulse',
         ]);
 
         config([
@@ -57,7 +57,7 @@ class ToolsPlugin implements Plugin
         ]);
 
         config([
-            'telescope.path' => $panel->getPath() . '/telescope',
+            'telescope.path' => 'telescope',
         ]);
 
         config([
@@ -76,7 +76,6 @@ class ToolsPlugin implements Plugin
 
         $panel->userMenuItems([
             ToolsAction::make(),
-
         ]);
     }
 
